@@ -4,7 +4,12 @@ import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.ProgramResult
 
 sealed class Day<I, O> : CliktCommand() {
+    private var internalTestMode = true
+
+    val testMode get() = internalTestMode
+
     override fun run() {
+        internalTestMode = true
         val testInputPart1 = loadInputFromString(loadTestInput())
 
         val part1TestActualOutput = doPart1(testInputPart1)
@@ -18,6 +23,7 @@ sealed class Day<I, O> : CliktCommand() {
             throw ProgramResult(1)
         }
 
+        internalTestMode = false
         val realInput = loadInputFromString(loadRealInput())
         val part1RealOutput = doPart1(realInput)
         println("Part 1 Answer: $part1RealOutput")
@@ -28,6 +34,7 @@ sealed class Day<I, O> : CliktCommand() {
 
         println()
 
+        internalTestMode = true
         val testInputPart2 = loadInputFromString(loadTestInputPart2())
 
         val part2TestActualOutput = doPart2(testInputPart2)
@@ -41,6 +48,7 @@ sealed class Day<I, O> : CliktCommand() {
             throw ProgramResult(1)
         }
 
+        internalTestMode = false
         val realOutputPart2 = doPart2(realInput)
         println("Part 2 Answer: $realOutputPart2")
     }
